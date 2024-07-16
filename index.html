@@ -8,18 +8,30 @@
 </head>
 <body>
     <div id="app">
-        {{message}}
+        <p v-bind:title="message" v-for="todo in todos" @click="inverser">
+            <!-- <span v-html="message"></span> -->
+            {{todo}}
+        </p>
+        <button type="button" @click="inverser"></button>
+        
     </div>
     <script>
-        const {createApp, ref} = Vue
-  
-        createApp({
-            setup() {
-                const message = ref('Hello world')
+        const {createApp, ref} = Vue 
+        createApp ({
+              
+            setup(){
+                const message = ref('Hello world');
+                const todos = ref(["Sauver le monde","Apprendre vue JS","Boire un café"]);
+                function inverser() {
+                    todos.value.reverse();
+                }
                 return {
-                    message
+                    message,
+                    todos,
+                    inverser
                 }
             }
+            
         }).mount('#app');
     </script>
 </body>
