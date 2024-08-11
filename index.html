@@ -4,31 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
 <body>
-    <div id="app">
-        <p v-bind:title="message" v-for="todo in todos" @click="inverser">
-            <!-- <span v-html="message"></span> -->
-            {{todo}}
-        </p>
-        <button type="button" @click="inverser"></button>
-        
+    <div class="mx-auto max-w-3xl" id="app">
+            <h1 class="text-3xl font-bold">Mon checklist</h1>
+            <p class=""></p>
+            <ajout-item :on-add-item="addNewItem"></ajout-item>
+            <todo-item v-for="(todo,index) in todos" :key="index" :todos="todo"></todo-item><button type="reset"></button>
     </div>
-    <script>
+    <script type="module">
+        import AjoutItem from './AjoutItem.js'
+        import TodoItem from './TodoItem.js'
         const {createApp, ref} = Vue 
         createApp ({
-              
+
+            components: {
+                TodoItem,
+                AjoutItem
+            },
+            
             setup(){
-                const message = ref('Hello world');
-                const todos = ref(["Sauver le monde","Apprendre vue JS","Boire un café"]);
-                function inverser() {
-                    todos.value.reverse();
+                const todos = ref(["Sauver le monde",
+                "Apprendre vue JS",
+                "Boire un café"]);
+                
+                const addNewItem = (item) => {
+                    console.log('addNewItem called with:', item); 
+                    todos.value.push(item);
                 }
+
                 return {
-                    message,
                     todos,
-                    inverser
+                    addNewItem
                 }
             }
             
